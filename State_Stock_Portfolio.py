@@ -6,32 +6,36 @@ SP500=["AAPL","MSFT","AMZN","TSLA","BRK.B","UNH","GOOGL","XOM","JNJ","JPM","NVDA
 
 States=[]
 
-
+# prompting the user to determine which state to create a portfolio around
 Choice=input("Which states' companies would you like to be in your portfolio (type an abbreviation like TX or NY)")
 print("Now wait a while; this could take up to 20 minutes")
 
+# getting data on which state each company in the S&P 500 is headquartered in
 for s in range(0,502):
     P = round(0.2 * s,1)
     P=str(P)
     print(P + "%", end='\r')
+    # the above code is a percentage completion counter as this part takes a while
     tick = yf.Ticker(SP500[s])
     try:
         States.append(tick.info["state"])
     except:
         States.append("null")
 
-
+# creating a new list containing only stocks headquartered in the users state of choice
 stocksInState=[]
 for i in range (0,502):
     P = round(0.2 * i,1)
     P=str(P)
     print(P + "%", end='\r')
+    # the above code is a percentage completion counter as this part takes a while
     if States[i]==Choice:
         stocksInState.append((SP500[i]))
 
+
+# creating a list for the name of each company in the state and a list for market cap of each company in the state
 Caps=[]
 Names=[]
-
 for s in stocksInState:
     s = yf.Ticker(s)
     Caps.append(s.info["marketCap"])
